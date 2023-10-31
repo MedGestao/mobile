@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.DoctorDetailActivity"
+    android:background="@color/black">
+
+
+    <ImageView
+        android:id="@+id/image_detalhe_activity"
+        android:layout_width="0dp"
+        android:layout_height="180dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/title_detalhe_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/poppins_bold"
+        android:text="Pacote Cancún 2024"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/image_detalhe_activity" />
+
+    <TextView
+        android:id="@+id/desc_detalhe_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/poppins"
+        android:text="Aéreo + Hotel all incluse"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@id/title_detalhe_activity"
+        app:layout_constraintTop_toBottomOf="@id/title_detalhe_activity" />
+
+    <LinearLayout
+        android:id="@+id/card_detalhe_activity"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="@id/desc_detalhe_activity"
+        app:layout_constraintTop_toBottomOf="@id/desc_detalhe_activity">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_outline_person_outline_24" />
+
+        <TextView
+            android:id="@+id/item_listview_num_persons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/poppins"
+            android:text="5 Pessoas"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:src="@drawable/ic_outline_wb_sunny_24" />
+
+        <TextView
+            android:id="@+id/item_listview_nights"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/poppins"
+            android:text="7 Diárias"
+            android:textSize="18sp"
+
+            />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/old_value_detalhe_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/poppins"
+        android:text="A partir de R$ 6500"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@id/card_detalhe_activity"
+        app:layout_constraintTop_toBottomOf="@id/card_detalhe_activity" />
+
+    <TextView
+        android:id="@+id/new_value_detalhe_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_medium"
+        android:text="R$ 3750"
+        android:textColor="#FD6C00"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/old_value_detalhe_activity"
+        app:layout_constraintTop_toBottomOf="@id/old_value_detalhe_activity" />
+
+    <TextView
+        android:id="@+id/type_detalhe_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins"
+        android:text="Cancelamento Grátis!"
+        android:textColor="#10630D"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@id/new_value_detalhe_activity"
+        app:layout_constraintTop_toBottomOf="@id/new_value_detalhe_activity" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
