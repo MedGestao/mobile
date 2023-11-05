@@ -36,43 +36,38 @@ class ListDoctorsActivity : AppCompatActivity() {
         dao.insertAll(staticDoctors())
         var list = dao.findAll()
 
-        //        val fab = binding.floatingActionButton
-//        fab.setOnClickListener {
-//            val intent = Intent(this, FormActivity::class.java)
-//            startActivity(intent)
-//        }
+        var listView = binding.doctorsListview
+        var adapter = DoctorAdapter(this, list)
 
-        var searchList = arrayListOf<Doctor>()
+        listView.adapter = adapter
+
         var searchView = binding.searchDoctorsListview
         searchView.clearFocus()
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
                 searchView.clearFocus()
-                return true
+                if (query != null) {
+                    var newList = dao.findByName(query.lowercase())
+                    adapter.update(newList)
+
+                }
+                return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                searchList.clear()
                 val searchText = newText!!.lowercase()
 
                 if (searchText.isNotEmpty()) {
-                    list = dao.findByName(searchText)
-
-//                    recyclerView.adapter!!.notifyDatasetChanged()
+                    var newList = dao.findByName(searchText)
+                    adapter.update(newList)
                 } else {
-                    searchList.clear()
-                    searchList.addAll(list)
-//                    recyclerView.adapter!!.notifyDatasetChanged()
+                    adapter.update(list)
                 }
                 return false
             }
 
         })
 
-        var listView = binding.doctorsListview
-        var adapter = DoctorAdapter(this, list)
-
-        listView.adapter = adapter
     }
 
     private fun staticDoctors(): List<Doctor> {
