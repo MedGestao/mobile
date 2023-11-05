@@ -7,45 +7,44 @@
     android:id="@+id/item_cardview_doctor"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    android:elevation="8dp"
     app:cardCornerRadius="16dp"
-    app:cardUseCompatPadding="true">
+    android:clickable="true"
+    android:focusable="true">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="16dp"
-        android:background="@color/black_secondary">
+        android:background="@color/black_secondary"
+        android:padding="16dp"
+        android:orientation="horizontal">
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/item_listview_doctor_img"
-            android:layout_width="74dp"
-            android:layout_height="69dp"
+            android:layout_width="76dp"
+            android:layout_height="76dp"
             android:scaleType="centerCrop"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/circleImageView"
             tools:srcCompat="@tools:sample/avatars" />
 
         <LinearLayout
             android:id="@+id/card_linear_layout"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:background="@color/black_secondary"
             android:layout_alignParentStart="true"
-            app:layout_constraintStart_toStartOf="@id/item_listview_doctor_img"
-            app:layout_constraintTop_toBottomOf="@id/item_listview_doctor_img">
+            android:layout_centerInParent="true"
+            android:layout_marginStart="100dp"
+            android:layout_toEndOf="@+id/item_listview_doctor_img"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/item_listview_doctor_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:fontFamily="@font/poppins"
-                android:text="Dr. Gabriel Melo"
-                android:textSize="18sp"
+                android:text="Dr. Teste Teste"
+                android:textColor="@color/white"
+                android:textFontWeight="600"
+                android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@id/item_listview_doctor_img"
                 app:layout_constraintTop_toBottomOf="@id/item_listview_doctor_img" />
 
@@ -53,14 +52,14 @@
                 android:id="@+id/item_listview_doctor_specialty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
                 android:fontFamily="@font/poppins"
-                android:text="Cardiologista"
-                android:textColor="#10630D"
-                android:textSize="16sp"
+                android:text="Clínico Geral"
+                android:textColor="@color/gray"
+                android:textFontWeight="500"
+                android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="@id/item_listview_doctor_name"
-                app:layout_constraintTop_toBottomOf="@id/item_listview_doctor_name"/>
-
+                app:layout_constraintTop_toBottomOf="@id/item_listview_doctor_name" />
         </LinearLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
 </androidx.cardview.widget.CardView>
