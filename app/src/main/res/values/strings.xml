@@ -3,4 +3,9 @@
     <string name="app_title_med">Med</string>
     <string name="app_title_desc">Gestão</string>
     <string name="doctors_title">Médicos</string>
+
+    <string name="open_nav">Open Navigation Drawer</string>
+    <string name="close_nav">Close Navigation Drawer</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

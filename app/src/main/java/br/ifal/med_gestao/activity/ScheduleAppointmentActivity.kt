@@ -9,7 +9,7 @@ import br.ifal.med_gestao.databinding.DoctorDetailActivityBinding
 import br.ifal.med_gestao.domain.Doctor
 import com.bumptech.glide.Glide
 
-class DoctorDetailActivity : AppCompatActivity() {
+class ScheduleAppointmentActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);

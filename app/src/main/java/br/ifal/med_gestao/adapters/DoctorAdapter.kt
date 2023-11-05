@@ -12,7 +12,7 @@ import br.ifal.med_gestao.databinding.ItemListDoctorsActivityBinding
 import br.ifal.med_gestao.domain.Doctor
 import com.bumptech.glide.Glide
 
-class DoctorAdapter(val context: Context, val doctors: List<Doctor>) : BaseAdapter() {
+class DoctorAdapter(val context: Context, var doctors: List<Doctor>) : BaseAdapter() {
     override fun getCount(): Int {
         return doctors.size
     }
@@ -25,9 +25,10 @@ class DoctorAdapter(val context: Context, val doctors: List<Doctor>) : BaseAdapt
         return position.toLong()
     }
 
-    fun atualizar(doctors: List<Doctor>) {
+    fun update(newData: List<Doctor>) {
         // Avisar ao Adapter que houve atualizacao no conjunto de dados
         // Assim, ele irá atualizar os dados
+        doctors = newData
         notifyDataSetChanged()
     }
 
