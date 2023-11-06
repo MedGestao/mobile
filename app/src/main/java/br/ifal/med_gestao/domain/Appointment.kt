@@ -5,13 +5,15 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
 import java.math.BigDecimal
+import java.time.LocalDate
 
 @Parcelize
 @Entity
-class Doctor(
+data class Appointment(
     @PrimaryKey(autoGenerate = true) var id : Long = 0L,
-    var image: String,
-    var name: String,
-    var specialty: String,
+    var doctorId: Long,
+//    var userId: Long,
+    var time: String,
+    var date: LocalDate,
     var price: BigDecimal
 ) : Parcelable
