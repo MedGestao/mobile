@@ -31,7 +31,7 @@
             android:name=".activity.ListDoctorsActivity"
             android:exported="false"></activity>
         <activity
-            android:name=".activity.FormActivity"
+            android:name=".activity.ScheduleAppointmentFormActivity"
             android:exported="false" />
         <activity
             android:name=".activity.DoctorDetailActivity"

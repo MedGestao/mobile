@@ -2,19 +2,25 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:gravity="center">
 
-    <!-- Auto layout, variables, and unit scale are not yet supported -->
     <TextView
-        android:id="@+id/logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        android:textSize="18sp"
+        android:text="@string/app_title_med"
+        android:fontFamily="@font/poppins"
+        android:textSize="15sp"
+        android:textColor="@color/green" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_title_desc"
+        android:fontFamily="@font/poppins"
+        android:textSize="15sp"
         android:textStyle="bold"
-        android:textColor="@color/green"
-        />
+        android:textColor="@color/green" />
 
 </LinearLayout>

@@ -31,6 +31,7 @@ class RegisterActivity : AppCompatActivity() {
 
 
             successfulRegistration(this, "Cadastro realizado com sucesso!")
+            finish()
 
         }
 
