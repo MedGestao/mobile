@@ -3,7 +3,7 @@ package br.ifal.med_gestao.activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import br.ifal.med_gestao.R
+import android.widget.Toast
 import br.ifal.med_gestao.database.DatabaseHelper
 import br.ifal.med_gestao.databinding.ActivityLoginBinding
 import br.ifal.med_gestao.domain.Patient
@@ -22,14 +22,23 @@ class ActivityLogin : AppCompatActivity() {
             var checkPatient = Patient(email, password)
             val dao = DatabaseHelper.getInstance(this).patientDao()
             var patient = dao.validatePatient(checkPatient.email)
-            println("Email do paciente: " + patient.email)
-            println("Senha do paciente: " + patient.password)
 
-            if(checkPatient.password == patient.password){
-                println("Entrou na condição!")
-                var intent = Intent(this, ListDoctorsActivity::class.java)
-                startActivity(intent)
+            if (patient != null) {
+                if(checkPatient.password == patient.password){
+
+                    var intent = Intent(this, ListDoctorsActivity::class.java)
+
+                    val bundle = Bundle()
+                    bundle.putParcelable("patient", patient)
+
+                    intent.putExtras(bundle)
+                    startActivity(intent)
+                }
+
+            } else {
+                Toast.makeText(this, "O e-mail ou a senha estão inválidos!", Toast.LENGTH_SHORT).show()
             }
+
         }
 
         val registerButton = binding.registerId

@@ -29,6 +29,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/appointment_doctor_img"
             android:layout_width="76dp"

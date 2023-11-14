@@ -1,5 +1,7 @@
 package br.ifal.med_gestao.activity
 
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
@@ -9,9 +11,12 @@ import br.ifal.med_gestao.adapters.DoctorAdapter
 import br.ifal.med_gestao.database.DatabaseHelper
 import br.ifal.med_gestao.databinding.ListDoctorsActivityBinding
 import br.ifal.med_gestao.domain.Doctor
+import br.ifal.med_gestao.domain.Patient
 import java.math.BigDecimal
 
 class ListDoctorsActivity : AppCompatActivity() {
+
+    private var patient: Patient? = null
 
     private val binding by lazy {
         ListDoctorsActivityBinding.inflate(layoutInflater)
@@ -19,10 +24,14 @@ class ListDoctorsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        supportActionBar?.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM)
+        supportActionBar?.setCustomView(R.layout.custom_toolbar_title)
 
-        supportActionBar?.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-
-        supportActionBar?.setCustomView(R.layout.custom_toolbar_title);
+        patient = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent.getParcelableExtra("patient", Patient::class.java)
+        } else {
+            intent.getParcelableExtra("patient")
+        }
 
         setContentView(binding.root)
     }
@@ -30,13 +39,23 @@ class ListDoctorsActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
+        val appointmentsButton = binding.appointmentsButton
+        appointmentsButton.setOnClickListener {
+            val intent = Intent(this, AppointmentsActivity::class.java)
+            val bundle = Bundle()
+            bundle.putParcelable("patient", patient)
+
+            intent.putExtras(bundle)
+            startActivity(intent)
+        }
+
         val dao = DatabaseHelper.getInstance(this).doctorDao()
         dao.deleteAll()
-        dao.insertAll(staticDoctors())
+        dao.insertAll(doctorsData())
         var list = dao.findAll()
 
         var listView = binding.doctorsListview
-        var adapter = DoctorAdapter(this, list)
+        var adapter = DoctorAdapter(this, patient, list)
 
         listView.adapter = adapter
 
@@ -69,7 +88,7 @@ class ListDoctorsActivity : AppCompatActivity() {
 
     }
 
-    private fun staticDoctors(): List<Doctor> {
+    private fun doctorsData(): List<Doctor> {
         return listOf(Doctor(1,
             "https://292aa00292a014763d1b-96a84504aed2b25fc1239be8d2b61736.ssl.cf1.rackcdn.com/GaleriaImagem/132060/fotos-profissionais-para-medicos-e-ambientes_dr-rodrigo-4.jpg",
             "Gabriel Melo",
