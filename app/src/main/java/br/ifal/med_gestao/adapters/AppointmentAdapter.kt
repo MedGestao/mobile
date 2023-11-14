@@ -45,7 +45,7 @@ class AppointmentAdapter(val context: Context, var appointments: List<Appointmen
         binding.itemListviewDoctorName.text = appointments[position].doctor.name
         binding.itemListviewDoctorSpecialty.text = appointments[position].doctor.specialty
 
-        binding.itemListviewDate.text = appointments[position].appointment.date.toString()
+        binding.itemListviewDate.text = appointments[position].appointment.date.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
         binding.itemListviewTime.text = appointments[position].appointment.time
 
         Glide.with(context)

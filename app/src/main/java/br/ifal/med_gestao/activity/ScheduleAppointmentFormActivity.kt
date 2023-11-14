@@ -3,6 +3,7 @@ package br.ifal.med_gestao.activity
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.widget.CalendarView
 import android.widget.RadioButton
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +16,7 @@ import br.ifal.med_gestao.domain.Patient
 import com.bumptech.glide.Glide
 import java.time.Instant
 import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 import java.util.Calendar
 
 
@@ -40,7 +42,7 @@ class ScheduleAppointmentFormActivity : AppCompatActivity() {
 
         binding.appointmentDoctorName.text = doctor?.name
         binding.appointmentDoctorSpecialty.text = doctor?.specialty
-        binding.appointmentPrice.text = doctor?.price.toString()
+        binding.appointmentPrice.text = "R$ ${doctor?.price.toString()}"
 
         // Set imagem
         Glide.with(this)
@@ -48,18 +50,15 @@ class ScheduleAppointmentFormActivity : AppCompatActivity() {
             .into(binding.appointmentDoctorImg)
 
         val calendarView = binding.appointmentCalendar
-        calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
-            val calender: Calendar = Calendar.getInstance()
-            calender.set(year, month, dayOfMonth)
-
-            calendarView.setDate(calender.timeInMillis, true, true)
-        }
+        calendarConfiguration(calendarView)
 
         val button = binding.appointmentButton
         button.setOnClickListener{
 
             var dateMillis = binding.appointmentCalendar.date
-            val date = Instant.ofEpochMilli(dateMillis).atZone(ZoneId.systemDefault()).toLocalDate()
+            val date = Instant.ofEpochMilli(dateMillis)
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate()
 
             var selectedTimeId = binding.appointmentRadioGroup.checkedRadioButtonId
             var time = findViewById<RadioButton>(selectedTimeId).text.toString()
@@ -75,5 +74,15 @@ class ScheduleAppointmentFormActivity : AppCompatActivity() {
         }
 
         setContentView(binding.root)
+    }
+
+    private fun calendarConfiguration(calendarView: CalendarView) {
+        calendarView.minDate = System.currentTimeMillis().plus(86400000)
+        // TODO: desabilitar os domingos
+        calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
+            val calender = Calendar.getInstance()
+            calender.set(year, month, dayOfMonth)
+            calendarView.setDate(calender.timeInMillis, true, true)
+        }
     }
 }

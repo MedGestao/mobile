@@ -22,6 +22,7 @@ interface AppointmentDao {
     fun delete(appointment : Appointment)
 
     @Transaction
-    @Query("SELECT * FROM Appointment a INNER JOIN Doctor d ON d.id = a.doctorId WHERE patientId = :patientId")
+    @Query("SELECT * FROM Appointment a INNER JOIN Doctor d ON d.id = a.doctorId " +
+            "WHERE patientId = :patientId ORDER BY date ASC")
     fun getAppointmentsByPatientId(patientId : Long): List<AppointmentWithDoctor>
 }
