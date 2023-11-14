@@ -54,13 +54,13 @@ class AppointmentAdapter(val context: Context, var appointments: List<Appointmen
 
         val cardView = binding.itemCardviewAppointment
         cardView.setOnClickListener {
-            val intent = Intent(context, AppointmentActivity::class.java)
-
-            val bundle = Bundle()
-            bundle.putParcelable("appointment", appointments[position])
-
-            intent.putExtras(bundle)
-            context.startActivity(intent)
+//            val intent = Intent(context, AppointmentActivity::class.java)
+//
+//            val bundle = Bundle()
+//            bundle.putParcelable("appointment", appointments[position])
+//
+//            intent.putExtras(bundle)
+//            context.startActivity(intent)
         }
 
         return binding.root

@@ -2,7 +2,6 @@ package br.ifal.med_gestao.activity
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import br.ifal.med_gestao.R
@@ -36,7 +35,6 @@ class AppointmentsActivity : AppCompatActivity() {
         val dao = DatabaseHelper.getInstance(this).appointmentDao()
 
         var list = dao.getAppointmentsByPatientId(patient!!.id)
-        Log.i("AppointmentsActivity", list.toString())
 
         var listView = binding.appointmentsListview
         var adapter = AppointmentAdapter(this, list)

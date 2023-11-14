@@ -13,6 +13,7 @@ import br.ifal.med_gestao.databinding.ScheduleAppointmentFormActivityBinding
 import br.ifal.med_gestao.domain.Appointment
 import br.ifal.med_gestao.domain.Doctor
 import br.ifal.med_gestao.domain.Patient
+import br.ifal.med_gestao.util.Notification
 import com.bumptech.glide.Glide
 import java.time.Instant
 import java.time.ZoneId
@@ -54,23 +55,26 @@ class ScheduleAppointmentFormActivity : AppCompatActivity() {
 
         val button = binding.appointmentButton
         button.setOnClickListener{
+            val dao = DatabaseHelper.getInstance(this).appointmentDao()
 
             var dateMillis = binding.appointmentCalendar.date
-            val date = Instant.ofEpochMilli(dateMillis)
-                .atZone(ZoneId.systemDefault())
-                .toLocalDate()
-
             var selectedTimeId = binding.appointmentRadioGroup.checkedRadioButtonId
             var time = findViewById<RadioButton>(selectedTimeId).text.toString()
 
-            val dao = DatabaseHelper.getInstance(this).appointmentDao()
+            if (dateMillis != null && time != null) {
+                val date = Instant.ofEpochMilli(dateMillis)
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate()
 
-            val appointment = Appointment(0, doctor!!.id, patient!!.id, time, date, doctor.price)
-            dao.insert(appointment)
+                val appointment = Appointment(0, doctor!!.id, patient!!.id, time, date, doctor.price)
+                dao.insert(appointment)
 
-            Log.i("NewAppointment", appointment.toString())
+                Log.i("NewAppointment", appointment.toString())
 
-            finish()
+                finish()
+            } else {
+                Notification.notification(this, "Selecione a data e o horário!")
+            }
         }
 
         setContentView(binding.root)

@@ -31,4 +31,17 @@ val MIGRATION_2_3 = object: Migration(1, 2){
 
         database.execSQL(sql)
     }
+
 }
+
+//val MIGRATION_3_4 = object: Migration(2, 3){
+//    override fun migrate(database: SupportSQLiteDatabase) {
+//        val sql = """
+//            ALTER TABLE `patient`
+//            ADD COLUMN `active` INTEGER;
+//
+//            ALTER TABLE `patient`
+//            ADD COLUMN `logged` INTEGER;
+//        """
+//    }
+//}
