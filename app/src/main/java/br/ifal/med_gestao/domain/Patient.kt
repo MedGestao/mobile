@@ -49,6 +49,6 @@ class Patient (
         "",
         "",
         "",
-        password
+        password,
     )
 }

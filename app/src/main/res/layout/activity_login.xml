@@ -1,11 +1,16 @@
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/activity_login_id"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_login_id"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    tools:context=".activity.ActivityLogin"
+    tools:context=".activity.ActivityLogin">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     tools:ignore="MissingConstraints">
 
     <ImageView
@@ -37,6 +42,28 @@
         android:textAlignment="center"
         android:fontFamily="@font/open_sans_semibold"
         app:layout_constraintTop_toBottomOf="@id/logo_id"/>
+
+<!--    <com.google.android.material.textfield.TextInputLayout-->
+<!--        android:id="@+id/layout_email_id"-->
+<!--        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        android:layout_marginStart="30dp"-->
+<!--        android:layout_marginEnd="30dp"-->
+<!--        android:hint="E-mail"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/register_title_id"-->
+<!--        >-->
+
+<!--        <com.google.android.material.textfield.TextInputEditText-->
+<!--            android:id="@+id/email_id"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:padding="8dp"-->
+<!--            android:background="@color/black_secondary" />-->
+
+<!--    </com.google.android.material.textfield.TextInputLayout>-->
+
 
     <androidx.cardview.widget.CardView
         android:id="@+id/register_card_email_id"
@@ -150,3 +177,4 @@
         app:layout_constraintTop_toBottomOf="@id/login_id"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
