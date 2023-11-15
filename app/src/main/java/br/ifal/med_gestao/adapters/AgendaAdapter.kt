@@ -13,7 +13,7 @@ import br.ifal.med_gestao.databinding.ItemListDoctorsActivityBinding
 import br.ifal.med_gestao.domain.Doctor
 import com.bumptech.glide.Glide
 
-class DoctorAdapter(val context: Context, var doctors: List<Doctor>) : BaseAdapter() {
+class AgendaAdapter(val context: Context, var doctors: List<Doctor>) : BaseAdapter() {
     override fun getCount(): Int {
         return doctors.size
     }
@@ -53,8 +53,7 @@ class DoctorAdapter(val context: Context, var doctors: List<Doctor>) : BaseAdapt
         // Recuperar CardView
         val cardView = binding.itemCardviewDoctor
         cardView.setOnClickListener {
-            val intent = Intent(context, DoctorDetailActivity::class.java)
-
+            val intent = Intent(context, ScheduleAppointmentFormActivity::class.java)
 
             val bundle = Bundle()
             bundle.putParcelable("doctor", doctors[position])

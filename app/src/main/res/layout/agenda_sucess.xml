@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/agend_sucess"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    tools:context=".activity.DoctorDetailActivity">
+
+    <LinearLayout
+        android:id="@+id/sucess_icon"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="250dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/agend_sucess">
+
+        <RelativeLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/simple_line"
+            android:layout_width="92dp"
+            android:layout_height="92dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:clipToOutline="true">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/check_box_icon"
+                android:scaleType="centerCrop"
+            />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+<LinearLayout
+    android:id="@+id/liner_text_sucess"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/sucess_icon"  >
+    <TextView
+        android:id="@+id/title_detalhe_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:fontFamily="@font/poppins_bold"
+        android:text="Consulta Agendada Com Sucesso"
+        android:textColor="#ffff"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sucess_icon" />
+    <TextView
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins"
+        android:textColor="#A1A0A4"
+        android:layout_marginTop="12dp"
+        android:textSize="15sp"
+        android:text="Fique tranquila! Te lembraremos quando estiver próximo da data agendada."
+        app:layout_constraintTop_toBottomOf="@+id/title_detalhe_activity"/>
+
+</LinearLayout>
+
+            <Button
+                android:id="@+id/fisish_consult"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="36dp"
+                android:layout_marginTop="240dp"
+                android:layout_marginEnd="36dp"
+                android:layout_marginBottom="26dp"
+                android:backgroundTint="#19735D"
+                android:padding="8dp"
+                android:background="@drawable/rounded_button"
+                android:text="Fechar"
+                android:textColor="#FFFF"
+                app:layout_constraintTop_toBottomOf="@+id/liner_text_sucess" />
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

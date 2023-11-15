@@ -1,5 +1,6 @@
 package br.ifal.med_gestao.activity
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -69,8 +70,8 @@ class ScheduleAppointmentFormActivity : AppCompatActivity() {
 
 //            Log.d("SelectedDate", date.toString())
 //            Log.d("SelectedTime", time)
-
-            finish()
+            val intent = Intent(this, ListDoctorsActivity::class.java)
+            this.startActivity(intent)
         }
 
         setContentView(binding.root)

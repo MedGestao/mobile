@@ -57,6 +57,8 @@
             android:padding="8dp"
             android:background="@color/black_secondary"
             android:textAlignment="center"
+            android:textColorHint="#ffff"
+            android:textColor="#ffff"
             android:hint="E-mail"/>
 
     </androidx.cardview.widget.CardView>
@@ -80,6 +82,8 @@
             android:background="@color/black_secondary"
             android:textAlignment="center"
             android:inputType="textPassword"
+            android:textColorHint="#ffff"
+            android:textColor="#ffff"
             android:hint="Senha" />
 
     </androidx.cardview.widget.CardView>

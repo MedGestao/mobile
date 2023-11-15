@@ -85,6 +85,7 @@ class ListDoctorsActivity : AppCompatActivity() {
                 "Heloísa Bastos",
                 "Neurologista",
                 BigDecimal(350)),
+
             Doctor(4,
                 "https://portal.unit.br/wp-content/uploads/2022/03/07.03-MED-Daniel-Silva-1024x798.jpg",
                 "Gabriel Telles",
@@ -120,6 +121,7 @@ class ListDoctorsActivity : AppCompatActivity() {
                 "Larissa Fernandes",
                 "Angiologista",
                 BigDecimal(200)),
+
             )
     }
 }

@@ -13,5 +13,5 @@ class Doctor(
     var image: String,
     var name: String,
     var specialty: String,
-    var price: BigDecimal
+    var price: BigDecimal,
 ) : Parcelable
