@@ -13,5 +13,15 @@ class Doctor(
     var image: String,
     var name: String,
     var specialty: String,
-    var price: BigDecimal
-) : Parcelable
+    var crm: String,
+    var price: BigDecimal = BigDecimal.ZERO
+) : Parcelable{
+    constructor(name: String, imageURL: String, specialty: String): this(
+        0L,
+        imageURL,
+        name,
+        specialty,
+        "",
+        BigDecimal.ZERO
+    )
+}

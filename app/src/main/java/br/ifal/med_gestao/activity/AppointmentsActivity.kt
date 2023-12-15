@@ -6,9 +6,17 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import br.ifal.med_gestao.R
 import br.ifal.med_gestao.adapters.AppointmentAdapter
+import br.ifal.med_gestao.clients.RetrofitHelper
 import br.ifal.med_gestao.database.DatabaseHelper
 import br.ifal.med_gestao.databinding.AppointmentsActivityBinding
+import br.ifal.med_gestao.domain.Appointment
+import br.ifal.med_gestao.domain.AppointmentWithDoctor
 import br.ifal.med_gestao.domain.Patient
+import br.ifal.med_gestao.service.AppointmentService
+import br.ifal.med_gestao.service.DoctorService
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class AppointmentsActivity : AppCompatActivity() {
 
@@ -32,9 +40,16 @@ class AppointmentsActivity : AppCompatActivity() {
             intent.getParcelableExtra("patient")
         }
 
-        val dao = DatabaseHelper.getInstance(this).appointmentDao()
+        var list = ArrayList<AppointmentWithDoctor>()
 
-        var list = dao.getAppointmentsByPatientId(patient!!.id)
+        val scope = CoroutineScope(Dispatchers.IO)
+        scope.launch {
+            list.addAll(
+                AppointmentService(RetrofitHelper().appointmentClient()).getAppointmentsByPatientID(patient!!.id))
+        }
+
+//        val dao = DatabaseHelper.getInstance(this).appointmentDao()
+//        var list = dao.getAppointmentsByPatientId(patient!!.id)
 
         var listView = binding.appointmentsListview
         var adapter = AppointmentAdapter(this, list)
