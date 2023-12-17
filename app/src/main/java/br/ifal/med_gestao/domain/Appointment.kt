@@ -12,7 +12,7 @@ import java.time.LocalDate
 data class Appointment(
     @PrimaryKey(autoGenerate = true) var id : Long = 0L,
     var doctorId: Long,
-//    var userId: Long,
+    var patientId: Long,
     var time: String,
     var date: LocalDate,
     var price: BigDecimal

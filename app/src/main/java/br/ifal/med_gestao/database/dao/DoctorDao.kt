@@ -4,9 +4,7 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
-import androidx.room.Transaction
 import br.ifal.med_gestao.domain.Doctor
-import br.ifal.med_gestao.domain.DoctorWithAppointments
 
 @Dao
 interface DoctorDao {

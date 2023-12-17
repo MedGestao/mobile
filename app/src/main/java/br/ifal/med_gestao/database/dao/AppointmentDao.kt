@@ -4,7 +4,9 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Transaction
 import br.ifal.med_gestao.domain.Appointment
+import br.ifal.med_gestao.domain.AppointmentWithDoctor
 
 @Dao
 interface AppointmentDao {
@@ -18,4 +20,9 @@ interface AppointmentDao {
     fun insertAll(appointments : List<Appointment>)
     @Delete
     fun delete(appointment : Appointment)
+
+    @Transaction
+    @Query("SELECT * FROM Appointment a INNER JOIN Doctor d ON d.id = a.doctorId " +
+            "WHERE patientId = :patientId ORDER BY date ASC")
+    fun getAppointmentsByPatientId(patientId : Long): List<AppointmentWithDoctor>
 }
