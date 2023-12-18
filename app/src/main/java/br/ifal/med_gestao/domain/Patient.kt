@@ -21,8 +21,30 @@ class Patient (
     var birthDate: String,
     var sex: String,
     var telephone: String,
-    var password: String
+    var password: String,
+
+    var imageUrl: String
 ): Parcelable{
+    constructor(
+        id: Long,
+        name: String,
+        email: String,
+        cpf: String,
+        birthDate: String,
+        sex: String,
+        telephone: String,
+        password: String
+    ): this(
+        id,
+        name,
+        email,
+        cpf,
+        birthDate,
+        sex,
+        telephone,
+        password,
+        "")
+
     constructor(
         name: String,
         email: String,
@@ -49,6 +71,19 @@ class Patient (
         "",
         "",
         "",
-        password
+        password,
+        ""
+    )
+
+    constructor(id: Long): this(
+        id,
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
     )
 }

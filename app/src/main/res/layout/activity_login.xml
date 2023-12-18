@@ -1,11 +1,16 @@
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/activity_login_id"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_login_id"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    tools:context=".activity.ActivityLogin"
+    tools:context=".activity.ActivityLogin">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     tools:ignore="MissingConstraints">
 
     <ImageView
@@ -38,6 +43,28 @@
         android:fontFamily="@font/open_sans_semibold"
         app:layout_constraintTop_toBottomOf="@id/logo_id"/>
 
+<!--    <com.google.android.material.textfield.TextInputLayout-->
+<!--        android:id="@+id/layout_email_id"-->
+<!--        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        android:layout_marginStart="30dp"-->
+<!--        android:layout_marginEnd="30dp"-->
+<!--        android:hint="E-mail"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/register_title_id"-->
+<!--        >-->
+
+<!--        <com.google.android.material.textfield.TextInputEditText-->
+<!--            android:id="@+id/email_id"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:padding="8dp"-->
+<!--            android:background="@color/black_secondary" />-->
+
+<!--    </com.google.android.material.textfield.TextInputLayout>-->
+
+
     <androidx.cardview.widget.CardView
         android:id="@+id/register_card_email_id"
         android:layout_width="match_parent"
@@ -54,12 +81,15 @@
             android:id="@+id/email_id"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="8dp"
             android:background="@color/black_secondary"
             android:textAlignment="center"
             android:textColorHint="#ffff"
             android:textColor="#ffff"
-            android:hint="E-mail"/>
+            android:hint="E-mail"
+            android:paddingVertical="8dp"
+            android:paddingHorizontal="16dp"
+            android:textColorHint="@color/gray"
+            android:textColor="@color/white" />
 
     </androidx.cardview.widget.CardView>
 
@@ -78,13 +108,13 @@
             android:id="@+id/password_id"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="8dp"
             android:background="@color/black_secondary"
-            android:textAlignment="center"
             android:inputType="textPassword"
-            android:textColorHint="#ffff"
-            android:textColor="#ffff"
-            android:hint="Senha" />
+            android:hint="Senha"
+            android:paddingVertical="8dp"
+            android:paddingHorizontal="16dp"
+            android:textColorHint="@color/gray"
+            android:textColor="@color/white" />
 
     </androidx.cardview.widget.CardView>
 
@@ -133,7 +163,7 @@
     <Button
         android:id="@+id/login_id"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="56dp"
         android:layout_marginTop="16dp"
         android:layout_marginStart="36dp"
         android:layout_marginEnd="36dp"
@@ -154,3 +184,4 @@
         app:layout_constraintTop_toBottomOf="@id/login_id"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

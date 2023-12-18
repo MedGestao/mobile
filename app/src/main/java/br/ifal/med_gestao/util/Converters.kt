@@ -27,4 +27,15 @@ class Converters {
         return input.toBigDecimalOrNull() ?: BigDecimal.valueOf(0.0)
     }
 
+    @TypeConverter
+    fun booleanToInteger(input: Boolean): Int{
+        return if(input) 1
+        else 0
+    }
+
+    @TypeConverter
+    fun integerToBoolean(input: Int): Boolean{
+        return input == 1
+    }
+
 }

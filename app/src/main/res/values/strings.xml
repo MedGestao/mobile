@@ -4,4 +4,5 @@
     <string name="app_title_desc">Gestão</string>
     <string name="doctors_title">Médicos</string>
     <string name="appointment_title">Agendar consulta</string>
+    <string name="appointments_title">Minhas consultas</string>
 </resources>
