@@ -7,14 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import br.ifal.med_gestao.activity.DoctorDetailActivity
 import br.ifal.med_gestao.activity.ScheduleAppointmentFormActivity
 import br.ifal.med_gestao.databinding.ItemListDoctorsActivityBinding
 import br.ifal.med_gestao.domain.Doctor
-import br.ifal.med_gestao.domain.Patient
 import com.bumptech.glide.Glide
 
-class DoctorAdapter(val context: Context, val patient: Patient?, var doctors: ArrayList<Doctor>) : BaseAdapter() {
+class AgendaAdapter(val context: Context, var doctors: List<Doctor>) : BaseAdapter() {
     override fun getCount(): Int {
         return doctors.size
     }
@@ -28,8 +26,7 @@ class DoctorAdapter(val context: Context, val patient: Patient?, var doctors: Ar
     }
 
     fun update(newData: List<Doctor>) {
-        doctors.clear()
-        doctors.addAll(newData)
+        doctors = newData
         notifyDataSetChanged()
     }
 
@@ -55,12 +52,10 @@ class DoctorAdapter(val context: Context, val patient: Patient?, var doctors: Ar
         // Recuperar CardView
         val cardView = binding.itemCardviewDoctor
         cardView.setOnClickListener {
-            val intent = Intent(context, DoctorDetailActivity::class.java)
-
+            val intent = Intent(context, ScheduleAppointmentFormActivity::class.java)
 
             val bundle = Bundle()
             bundle.putParcelable("doctor", doctors[position])
-            bundle.putParcelable("patient", patient)
 
             intent.putExtras(bundle)
             context.startActivity(intent)

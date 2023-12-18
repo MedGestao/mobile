@@ -1,6 +1,7 @@
 package br.ifal.med_gestao.activity
 
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -8,12 +9,12 @@ import android.view.View
 import android.widget.CalendarView
 import android.widget.RadioButton
 import android.widget.RadioGroup
+import android.widget.TextView
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import br.ifal.med_gestao.R
 import br.ifal.med_gestao.adapters.ScheduleRadioButtonAdapter
 import br.ifal.med_gestao.clients.RetrofitHelper
-import br.ifal.med_gestao.databinding.RadioButtonItemBinding
 import br.ifal.med_gestao.databinding.ScheduleAppointmentFormActivityBinding
 import br.ifal.med_gestao.domain.Appointment
 import br.ifal.med_gestao.domain.Doctor
@@ -30,18 +31,18 @@ import java.math.BigDecimal
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
-import java.time.format.DateTimeFormatter
 import java.util.Calendar
 
 
 class ScheduleAppointmentFormActivity : AppCompatActivity() {
+
+    private var appointmentService = AppointmentService(RetrofitHelper().appointmentClient())
+    private var doctorService = DoctorService(RetrofitHelper().doctorClient())
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         supportActionBar?.setCustomView(R.layout.custom_toolbar_title);
-
-        val binding = ScheduleAppointmentFormActivityBinding.inflate(layoutInflater)
-        val bindingRadioButtonLayout = RadioButtonItemBinding.inflate(layoutInflater)
 
         val doctor = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             intent.getParcelableExtra("doctor", Doctor::class.java)
@@ -54,96 +55,99 @@ class ScheduleAppointmentFormActivity : AppCompatActivity() {
         } else {
             intent.getParcelableExtra("patient")
         }
+        var shared = getSharedPreferences("SHARED_LOGIN", Context.MODE_PRIVATE)
+        var patient_id = shared.getString("PATIENT_ID", null)
 
-        // Set imagem
+        val binding = ScheduleAppointmentFormActivityBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+
+        // Preencher dados do médico
         Glide.with(this)
             .load(doctor?.image)
             .into(binding.appointmentDoctorImg)
-
         binding.appointmentDoctorName.text = doctor?.name
         binding.appointmentDoctorSpecialty.text = doctor?.specialty
 
+        // Buscar períodos disponíveis pela data selecionada no calendário
         val calendarView = binding.appointmentCalendar
+        calendarView.minDate = System.currentTimeMillis().plus(86400000)
         val selectedDate = toLocalDate(calendarView.date)
-        var radioGroup = binding.appointmentRadioGroup
-        callApi(this, doctor, selectedDate, binding, bindingRadioButtonLayout, radioGroup)
 
-        calendarConfiguration(this, calendarView, doctor, binding, bindingRadioButtonLayout, radioGroup)
+        var radioGroup = binding.appointmentRadioGroup
+        var emptyPeriodsMessage = binding.emptyPeriods
+
+        var appointmentPriceTextView = binding.appointmentPrice
+
+        updateRadioGroupWithAvailablePeriods(this, doctor, selectedDate, emptyPeriodsMessage, appointmentPriceTextView, radioGroup)
+        addCalendarListener(this, calendarView, doctor, emptyPeriodsMessage, appointmentPriceTextView, radioGroup)
 
         val button = binding.appointmentButton
         button.setOnClickListener{
-//            val dao = DatabaseHelper.getInstance(this).appointmentDao()
 
-            var dateMillis = binding.appointmentCalendar.date
-            var selectedTimeId = radioGroup.checkedRadioButtonId
-            var time = findViewById<RadioButton>(selectedTimeId).text.toString()
-            val date = Instant.ofEpochMilli(dateMillis)
-                .atZone(ZoneId.systemDefault())
-                .toLocalDate()
+            var selectedPeriodId = radioGroup.checkedRadioButtonId
 
-            if (date != null && time.isNotEmpty()) {
+            if (selectedPeriodId != -1) {
+                var period = findViewById<RadioButton>(selectedPeriodId)?.text.toString()
 
-                val appointment = Appointment(0, doctor!!.id, patient!!.id, time, date, BigDecimal(binding.appointmentPrice.text.toString().replace(Regex("[^0-9]"), "")))
-//                dao.insert(appointment)
+                val appointment = Appointment(0, doctor!!.id, patient_id!!.toLong(), period, selectedDate,
+                    BigDecimal(binding.appointmentPrice.text.toString().replace(Regex("[^0-9]"), "")))
+
                 val scope = CoroutineScope(Dispatchers.IO)
                 scope.launch {
-                    AppointmentService(RetrofitHelper().appointmentClient()).createAppointment(
-                        appointment
-                    )
-                    Log.i("NewAppointment", appointment.toString())
+                    appointmentService.createAppointment(appointment)
 
-                    finish()
+                    launch(Dispatchers.Main) {
+                        Notification.notification(this@ScheduleAppointmentFormActivity, "Consulta agendada com sucesso!")
+
+                        val intent = Intent(this@ScheduleAppointmentFormActivity, ListDoctorsActivity::class.java)
+                        startActivity(intent)
+                    }
                 }
             } else {
                 Notification.notification(this, "Selecione a data e o horário!")
             }
         }
 
-        setContentView(binding.root)
     }
 
-    private fun callApi(
+    private fun updateRadioGroupWithAvailablePeriods(
         context: Context,
         doctor: Doctor?,
         selectedDate: LocalDate,
-        binding: ScheduleAppointmentFormActivityBinding,
-        bindingRadioButtonLayout: RadioButtonItemBinding,
+        emptyPeriodsMessageTextView: TextView,
+        appointmentPriceTextView: TextView,
         radioGroup: RadioGroup
     ) {
-        var doctorSchedules = ArrayList<DoctorSchedule>();
-        var empty = binding.emptyPeriods
+        CoroutineScope(Dispatchers.IO).launch {
 
-        val scope = CoroutineScope(Dispatchers.IO)
-        scope.launch {
-            doctorSchedules.addAll(
-                DoctorService(RetrofitHelper().doctorClient())
-                    .getScheduleByDoctorById(doctor!!.id, selectedDate)
-            )
+            var doctorSchedules = ArrayList<DoctorSchedule>();
+            doctorSchedules.addAll(doctorService.getScheduleByDoctorById(doctor!!.id, selectedDate))
 
             launch(Dispatchers.Main) {
-                if (doctorSchedules.isNullOrEmpty()) {
-                    radioGroup.removeAllViews()
-                    empty.visibility = View.VISIBLE
-                }
 
                 if (doctorSchedules.isNotEmpty()) {
-                    binding.appointmentPrice.text = "R$ ${doctorSchedules.get(0).queryValue}"
-                    empty.visibility = View.INVISIBLE
-                }
+                    appointmentPriceTextView.text = "R$ ${doctorSchedules.get(0).queryValue}"
+                    emptyPeriodsMessageTextView.visibility = View.INVISIBLE
 
-                doctorSchedules.forEachIndexed { index, item ->
+                    doctorSchedules.forEach { item ->
+                        radioGroup.removeAllViews()
+                        ScheduleRadioButtonAdapter(context, item).getView(radioGroup)
+                    }
+                } else {
                     radioGroup.removeAllViews()
-                    ScheduleRadioButtonAdapter(context, item).getView(radioGroup)
+                    emptyPeriodsMessageTextView.visibility = View.VISIBLE
                 }
             }
         }
     }
 
-    private fun calendarConfiguration(context: Context, calendarView: CalendarView, doctor: Doctor?, binding: ScheduleAppointmentFormActivityBinding,
-                                      bindingRadioButtonLayout: RadioButtonItemBinding,
-                                      radioGroup: RadioGroup) {
-        calendarView.minDate = System.currentTimeMillis().plus(86400000)
-        // TODO: desabilitar os domingos e sábados
+    private fun addCalendarListener(context: Context,
+                                    calendarView: CalendarView,
+                                    doctor: Doctor?,
+                                    emptyPeriodsMessageTextView: TextView,
+                                    appointmentPriceTextView: TextView,
+                                    radioGroup: RadioGroup) {
 
         calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
             try {
@@ -152,12 +156,12 @@ class ScheduleAppointmentFormActivity : AppCompatActivity() {
                 calender.set(year, month, dayOfMonth)
                 calendarView.setDate(calender.timeInMillis, true, true)
 
-                callApi(
+                updateRadioGroupWithAvailablePeriods(
                     context,
                     doctor,
                     LocalDate.of(year, month2, dayOfMonth),
-                    binding,
-                    bindingRadioButtonLayout,
+                    emptyPeriodsMessageTextView,
+                    appointmentPriceTextView,
                     radioGroup
                 )
             } catch (exception: Exception) {
