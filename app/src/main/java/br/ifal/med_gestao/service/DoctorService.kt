@@ -20,10 +20,11 @@ class DoctorService (
             }
     }
 
-    fun getAll(doctorName : String, specialtyName : String) : List<Doctor> {
+    fun getAll(doctorName : String) : List<Doctor> {
         Log.i("test", "Iniciando requisição")
+
         val doctors = doctorClient
-            .getAll(doctorName, specialtyName)
+            .getAll(doctorName)
             .execute()
             .body()?.let {
                 it.map {
