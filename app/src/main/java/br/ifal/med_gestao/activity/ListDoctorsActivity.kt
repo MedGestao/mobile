@@ -93,7 +93,6 @@ class ListDoctorsActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-    }
         val editProfileButton = binding.editProfileButton
         editProfileButton.setOnClickListener {
             val scope = CoroutineScope(Dispatchers.IO)
@@ -101,6 +100,7 @@ class ListDoctorsActivity : AppCompatActivity() {
                 connectorSelectById(patient!!.id)
             }
         }
+    }
 
 //        val dao = DatabaseHelper.getInstance(this).doctorDao()
 //        dao.deleteAll()
