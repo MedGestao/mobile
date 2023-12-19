@@ -23,7 +23,7 @@ class RetrofitHelper {
     fun patientClient(): PatientClient = buildRetrofit().create(PatientClient::class.java)
 
     companion object {
-        const val BASE_URL = "http://192.168.112.37:3001"
+        const val BASE_URL = "http://10.0.0.121:3001"
     }
 }
 

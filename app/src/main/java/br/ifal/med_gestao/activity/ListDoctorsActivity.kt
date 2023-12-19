@@ -1,8 +1,12 @@
 package br.ifal.med_gestao.activity
 
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import br.ifal.med_gestao.R
@@ -12,9 +16,12 @@ import br.ifal.med_gestao.databinding.ListDoctorsActivityBinding
 import br.ifal.med_gestao.domain.Doctor
 import br.ifal.med_gestao.domain.Patient
 import br.ifal.med_gestao.service.DoctorService
+import br.ifal.med_gestao.service.PatientService
+import br.ifal.med_gestao.util.Notification
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class ListDoctorsActivity : AppCompatActivity() {
 
@@ -49,6 +56,14 @@ class ListDoctorsActivity : AppCompatActivity() {
 
             intent.putExtras(bundle)
             startActivity(intent)
+        }
+
+        val editProfileButton = binding.editProfileButton
+        editProfileButton.setOnClickListener {
+            val scope = CoroutineScope(Dispatchers.IO)
+            scope.launch {
+                connectorSelectById(patient!!.id)
+            }
         }
 
 //        val dao = DatabaseHelper.getInstance(this).doctorDao()
@@ -106,5 +121,33 @@ class ListDoctorsActivity : AppCompatActivity() {
 //
 //        })
 
+    }
+
+    suspend fun connectorSelectById(id : Long) = withContext(Dispatchers.IO) {
+        try {
+            var patientEdit = PatientService(RetrofitHelper().patientClient()).findPatientById(id)
+
+//            Handler(Looper.getMainLooper()).post {
+//                notification(this@RegisterActivity, "Cadastro realizado com sucesso!")
+//            }
+            val intent = Intent(this@ListDoctorsActivity, RegisterActivity ::class.java)
+            val bundle = Bundle()
+            bundle.putParcelable("patient", patientEdit)
+
+            intent.putExtras(bundle)
+            startActivity(intent)
+        } catch (exception: Exception) {
+            println("erro" + exception.message)
+            Handler(Looper.getMainLooper()).post {
+                Notification.notification(
+                    this@ListDoctorsActivity,
+                    "Erro ao retornar dados, tente novamente!"
+                )
+            }
+        }
+    }
+
+    private fun notification(context: Context, message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 }

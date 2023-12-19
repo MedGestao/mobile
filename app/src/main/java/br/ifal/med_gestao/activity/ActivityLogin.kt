@@ -53,8 +53,10 @@ class ActivityLogin : AppCompatActivity() {
     }
 
     suspend fun connector(patient : Patient) = withContext(Dispatchers.IO) {
+        println("Entrou aqui!")
         try {
             var patientResponse = PatientService(RetrofitHelper().patientClient()).login(patient)
+            println("PatientResponse: " + patientResponse)
 
             if(patientResponse == null){
 
