@@ -15,5 +15,5 @@ data class Appointment(
     var patientId: Long,
     var time: String,
     var date: LocalDate,
-    var price: BigDecimal
+    var price: BigDecimal,
 ) : Parcelable

@@ -1,121 +1,198 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".activity.DoctorDetailActivity"
-    android:background="@color/black">
+    android:layout_height="match_parent">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layouMedical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black"
+        tools:context=".activity.DoctorDetailActivity">
 
-    <ImageView
-        android:id="@+id/image_detalhe_activity"
-        android:layout_width="0dp"
-        android:layout_height="180dp"
-        android:scaleType="centerCrop"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
-
-    <TextView
-        android:id="@+id/title_detalhe_activity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:fontFamily="@font/poppins_bold"
-        android:text="Pacote Cancún 2024"
-        android:textSize="28sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/image_detalhe_activity" />
-
-    <TextView
-        android:id="@+id/desc_detalhe_activity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/poppins"
-        android:text="Aéreo + Hotel all incluse"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="@id/title_detalhe_activity"
-        app:layout_constraintTop_toBottomOf="@id/title_detalhe_activity" />
-
-    <LinearLayout
-        android:id="@+id/card_detalhe_activity"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="@id/desc_detalhe_activity"
-        app:layout_constraintTop_toBottomOf="@id/desc_detalhe_activity">
-
-        <ImageView
-            android:layout_width="wrap_content"
+        <!--<LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_outline_person_outline_24" />
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:gravity="center"
+               app:layout_constraintTop_toTopOf="@+id/layouMedical">
+
+           >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/app_title_med"
+                android:fontFamily="@font/poppins"
+                android:textSize="15sp"
+                android:textColor="@color/green" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/app_title_desc"
+                android:fontFamily="@font/poppins"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="@color/green" />
+
+        </LinearLayout>-->
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/item_listview_doctor_img"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/circleImageView"
+                tools:srcCompat="@tools:sample/avatars" />
+        </LinearLayout>
+
 
         <TextView
-            android:id="@+id/item_listview_num_persons"
+            android:id="@+id/title_detalhe_activity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:fontFamily="@font/poppins"
-            android:text="5 Pessoas"
-            android:textSize="18sp" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:src="@drawable/ic_outline_wb_sunny_24" />
+            android:layout_marginStart="104dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/poppins_bold"
+            android:text="Dr. Gabriel Melo"
+            android:textColor="#ffff"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
         <TextView
-            android:id="@+id/item_listview_nights"
+            android:id="@+id/desc_detalhe_activity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:fontFamily="@font/poppins"
-            android:text="7 Diárias"
+            android:gravity="center"
+            android:text="Cardiologista"
+            android:textColor="#A1A0A4"
             android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.501"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title_detalhe_activity" />
 
-            />
 
-    </LinearLayout>
+        <TextView
+            android:id="@+id/old_value_detalhe_activity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="87dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="9dp"
+            android:fontFamily="@font/poppins"
+            android:text="Valor da consulta"
+            android:textColor="#A1A0A4"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toStartOf="@+id/value_consult"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/desc_detalhe_activity" />
 
-    <TextView
-        android:id="@+id/old_value_detalhe_activity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/poppins"
-        android:text="A partir de R$ 6500"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="@id/card_detalhe_activity"
-        app:layout_constraintTop_toBottomOf="@id/card_detalhe_activity" />
+        <TextView
+            android:id="@+id/value_consult"
+            android:layout_width="0dp"
+            android:layout_height="28dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="81dp"
+            android:fontFamily="@font/poppins_medium"
+            android:text="R$ 370"
+            android:textColor="#1BE29A"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/old_value_detalhe_activity"
+            app:layout_constraintTop_toBottomOf="@id/desc_detalhe_activity" />
 
-    <TextView
-        android:id="@+id/new_value_detalhe_activity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins_medium"
-        android:text="R$ 3750"
-        android:textColor="#FD6C00"
-        android:textSize="40sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@id/old_value_detalhe_activity"
-        app:layout_constraintTop_toBottomOf="@id/old_value_detalhe_activity" />
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="160dp"
+            app:cardCornerRadius="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
-    <TextView
-        android:id="@+id/type_detalhe_activity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins"
-        android:text="Cancelamento Grátis!"
-        android:textColor="#10630D"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@id/new_value_detalhe_activity"
-        app:layout_constraintTop_toBottomOf="@id/new_value_detalhe_activity" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#16161B"
+                android:orientation="vertical"
+                android:padding="16dp"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="313dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Descrição"
+                    android:textColor="#DDDCDC"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    tools:layout_editor_absoluteX="235dp"
+                    tools:layout_editor_absoluteY="228dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Médico Formado na USP Sou Médico formado na USP. Cardiologista pelo INCOR-HCFMUSP e título de especialista pela Sociedade Brasileira de Cardiologia. Clínica Médica pelo Hospital das Clínicas da FMUSP."
+                    android:textColor="#DDDCDC"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Doenças tratadas"
+                    android:textColor="#DDDCDC"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    tools:layout_editor_absoluteX="235dp"
+                    tools:layout_editor_absoluteY="228dp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewEspecialidades"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical"
+                    app:layout_constraintTop_toBottomOf="@id/description" />
+
+                <Button
+                    android:id="@+id/button_id_doctor_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="36dp"
+                    android:layout_marginTop="1dp"
+                    android:layout_marginEnd="36dp"
+                    android:layout_marginBottom="26dp"
+                    android:backgroundTint="#19735D"
+                    android:padding="8dp"
+                    android:text="Agendar Consulta"
+                    app:layout_constraintTop_toBottomOf="@+id/recyclerViewEspecialidades" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

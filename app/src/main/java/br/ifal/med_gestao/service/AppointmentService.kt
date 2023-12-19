@@ -16,7 +16,7 @@ class AppointmentService (
     private val appointmentClient : AppointmentClient){
 
     fun createAppointment(appointment: Appointment): Response<Void> {
-        Log.i("test", "Criando agendamento")
+        Log.i("New Appointment", appointment.toString())
 
         val time = LocalTime.of(0, 0, 0)
         val localDateTime = LocalDateTime.of(appointment.date, time)

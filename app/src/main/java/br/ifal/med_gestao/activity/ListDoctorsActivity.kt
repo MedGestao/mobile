@@ -9,6 +9,7 @@ import android.os.Looper
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import br.ifal.med_gestao.R
 import br.ifal.med_gestao.adapters.DoctorAdapter
 import br.ifal.med_gestao.clients.RetrofitHelper
@@ -26,9 +27,14 @@ import kotlinx.coroutines.withContext
 class ListDoctorsActivity : AppCompatActivity() {
 
     private var patient: Patient? = null
+    private var doctorService = DoctorService(RetrofitHelper().doctorClient());
 
     private val binding by lazy {
         ListDoctorsActivityBinding.inflate(layoutInflater)
+    }
+
+    private val adapter by lazy {
+        DoctorAdapter(this, patient, ArrayList<Doctor>())
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,10 +49,39 @@ class ListDoctorsActivity : AppCompatActivity() {
         }
 
         setContentView(binding.root)
+
+        var listView = binding.doctorsListview
+        listView.adapter = adapter
     }
 
     override fun onResume() {
         super.onResume()
+
+        getDoctors("", adapter)
+
+        var searchView = binding.searchDoctorsListview
+        searchView.clearFocus()
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                searchView.clearFocus()
+                if (query != null) {
+                    getDoctors(query.lowercase(), adapter)
+                }
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                val searchText = newText!!.lowercase()
+
+                if (searchText.isNotEmpty()) {
+                    getDoctors(searchText, adapter)
+                } else {
+                    getDoctors(searchText, adapter)
+                }
+                return true
+            }
+
+        })
 
         val appointmentsButton = binding.appointmentsButton
         appointmentsButton.setOnClickListener {
@@ -58,6 +93,7 @@ class ListDoctorsActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+    }
         val editProfileButton = binding.editProfileButton
         editProfileButton.setOnClickListener {
             val scope = CoroutineScope(Dispatchers.IO)
@@ -73,27 +109,15 @@ class ListDoctorsActivity : AppCompatActivity() {
 
 //        var list = ArrayList<Doctor>()
 
-//        val scope = CoroutineScope(Dispatchers.IO)
-//        scope.launch {
-//            val doctor = DoctorService(RetrofitHelper().doctorClient()).findDoctorById(1)!!
-//            list.add(doctor)
-//        }
-
-        var list = ArrayList<Doctor>();
-
+    private fun getDoctors(searchText: String, adapter: DoctorAdapter) {
         val scope = CoroutineScope(Dispatchers.IO)
         scope.launch {
-            var specialtyName = ""
-            var doctorName = ""
-            list.addAll(DoctorService(RetrofitHelper().doctorClient())
-                .getAll(specialtyName, doctorName))
+            var newList = doctorService.getAll(searchText)
+
+            launch(Dispatchers.Main) {
+                adapter.update(newList)
+            }
         }
-
-        var listView = binding.doctorsListview
-        var adapter = DoctorAdapter(this, patient, list)
-
-        listView.adapter = adapter
-
         var searchView = binding.searchDoctorsListview
         searchView.clearFocus()
 //        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{

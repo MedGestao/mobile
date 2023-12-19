@@ -9,6 +9,10 @@ import java.math.BigDecimal
 
 class RetrofitHelper {
 
+    companion object {
+        const val BASE_URL = "http://192.168.0.164:3001"
+    }
+
     private fun moshi() = Moshi.Builder()
         .add(BigDecimalAdapter)
         .build()
@@ -21,10 +25,6 @@ class RetrofitHelper {
     fun doctorClient(): DoctorClient = buildRetrofit().create(DoctorClient::class.java)
     fun appointmentClient(): AppointmentClient = buildRetrofit().create(AppointmentClient::class.java)
     fun patientClient(): PatientClient = buildRetrofit().create(PatientClient::class.java)
-
-    companion object {
-        const val BASE_URL = "http://10.0.0.121:3001"
-    }
 }
 
 object BigDecimalAdapter {
